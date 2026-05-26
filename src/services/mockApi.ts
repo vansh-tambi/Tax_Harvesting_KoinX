@@ -1,63 +1,56 @@
-import { Holding, Transaction, HarvestingRecommendation, PortfolioSummary } from '../types';
+import { Holding, CapitalGain } from '../types/tax';
+import holdingsData from '../data/holdings.json';
+import capitalGainsData from '../data/capitalGains.json';
+
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export class MockApiService {
-  private static LATENCY_MS = 800;
+  private static LATENCY_MS = 500;
+  private static shouldError = false;
 
-  private static delay<T>(value: T): Promise<T> {
-    return new Promise((resolve) => {
-      setTimeout(() => resolve(value), this.LATENCY_MS);
-    });
+  // Set the error flag for simulation
+  public static setErrorSimulation(value: boolean) {
+    this.shouldError = value;
   }
 
-  /**
-   * Fetches the list of active user holdings.
-   */
-  public static async fetchHoldings(): Promise<Holding[]> {
-    // Stub implementation returning empty list
-    return this.delay<Holding[]>([]);
+  private static normalizePrecision(num: number): number {
+    return Math.round((num + Number.EPSILON) * 100) / 100;
   }
 
-  /**
-   * Fetches user transactions history.
-   */
-  public static async fetchTransactions(): Promise<Transaction[]> {
-    // Stub implementation returning empty list
-    return this.delay<Transaction[]>([]);
+  public static async getHoldings(): Promise<Holding[]> {
+    await delay(this.LATENCY_MS);
+    if (this.shouldError) {
+      throw new Error('Failed to fetch holdings data from mock API');
+    }
+
+    return (holdingsData as Holding[]).map((holding) => ({
+      ...holding,
+      quantity: this.normalizePrecision(holding.quantity),
+      value: this.normalizePrecision(holding.value),
+      buyPrice: this.normalizePrecision(holding.buyPrice),
+      currentPrice: this.normalizePrecision(holding.currentPrice),
+      unrealizedPnL: this.normalizePrecision(holding.unrealizedPnL),
+      unrealizedPnLPercent: this.normalizePrecision(holding.unrealizedPnLPercent),
+      savings: this.normalizePrecision(holding.savings),
+    }));
   }
 
-  /**
-   * Fetches tax harvesting recommendations based on holdings.
-   */
-  public static async fetchHarvestingRecommendations(): Promise<HarvestingRecommendation[]> {
-    // Stub implementation returning empty list
-    return this.delay<HarvestingRecommendation[]>([]);
-  }
+  public static async getCapitalGains(): Promise<CapitalGain> {
+    await delay(this.LATENCY_MS);
+    if (this.shouldError) {
+      throw new Error('Failed to fetch capital gains data from mock API');
+    }
 
-  /**
-   * Fetches overall portfolio metrics.
-   */
-  public static async fetchPortfolioSummary(): Promise<PortfolioSummary> {
-    // Stub implementation returning default empty summary
-    return this.delay<PortfolioSummary>({
-      totalValue: 0,
-      totalCostBasis: 0,
-      totalUnrealizedGains: 0,
-      totalUnrealizedLosses: 0,
-      netUnrealizedGainLoss: 0,
-      harvestableLosses: 0,
-      estimatedTaxSavings: 0,
-    });
-  }
-
-  /**
-   * Submits a batch of tax loss harvesting transactions.
-   */
-  public static async executeHarvestLots(
-    _recommendationIds: string[]
-  ): Promise<{ success: boolean; executedTransactions: Transaction[] }> {
-    return this.delay({
-      success: true,
-      executedTransactions: [],
-    });
+    const data = capitalGainsData as CapitalGain;
+    return {
+      shortTerm: {
+        profits: this.normalizePrecision(data.shortTerm.profits),
+        losses: this.normalizePrecision(data.shortTerm.losses),
+      },
+      longTerm: {
+        profits: this.normalizePrecision(data.longTerm.profits),
+        losses: this.normalizePrecision(data.longTerm.losses),
+      },
+    };
   }
 }
