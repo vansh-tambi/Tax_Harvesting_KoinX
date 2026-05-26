@@ -7,7 +7,7 @@ import PreHarvestCard from '../components/cards/PreHarvestCard';
 import AfterHarvestCard from '../components/cards/AfterHarvestCard';
 import HoldingsTable from '../components/holdings/HoldingsTable';
 import { MockApiService } from '../services/mockApi';
-import { Holding } from '../types/tax';
+import type { Holding } from '../types/tax';
 
 const fadeIn = {
   hidden: { opacity: 0 },

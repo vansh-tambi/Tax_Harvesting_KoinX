@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { MockApiService } from '../../services/mockApi';
-import { CapitalGain } from '../../types/tax';
+import type { CapitalGain } from '../../types/tax';
 import GainMetric, { formatINR } from './GainMetric';
 
 export default function PreHarvestCard() {

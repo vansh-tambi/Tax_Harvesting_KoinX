@@ -1,4 +1,5 @@
-import { Holding, CapitalGain } from '../types/tax';
+import type { Holding } from '../types/tax';
+import type { CapitalGain } from '../types/tax';
 import holdingsData from '../data/holdings.json';
 import capitalGainsData from '../data/capitalGains.json';
 

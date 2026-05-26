@@ -1,4 +1,4 @@
-import { Holding } from '../../types/tax';
+import type { Holding } from '../../types/tax';
 import TableHeader from './TableHeader';
 import HoldingRow from './HoldingRow';
 

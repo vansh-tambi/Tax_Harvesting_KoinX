@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Holding, PortfolioSummary } from '../types';
+import type { Holding, PortfolioSummary } from '../types';
 
 export function usePortfolio() {
   const [holdings] = useState<Holding[]>([]);

@@ -1,4 +1,4 @@
-import { Holding } from '../../types/tax';
+import type { Holding } from '../../types/tax';
 import AssetCell from './AssetCell';
 import { formatINR } from '../cards/GainMetric';
 
