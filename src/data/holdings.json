@@ -1,0 +1,68 @@
+[
+  {
+    "ticker": "BTC",
+    "name": "Bitcoin",
+    "quantity": 0.45,
+    "value": 26640.00,
+    "buyPrice": 62500.00,
+    "currentPrice": 59200.00,
+    "unrealizedPnL": -1485.00,
+    "unrealizedPnLPercent": -5.28,
+    "savings": 445.50
+  },
+  {
+    "ticker": "ETH",
+    "name": "Ethereum",
+    "quantity": 3.20,
+    "value": 9984.00,
+    "buyPrice": 3450.00,
+    "currentPrice": 3120.00,
+    "unrealizedPnL": -1056.00,
+    "unrealizedPnLPercent": -9.57,
+    "savings": 316.80
+  },
+  {
+    "ticker": "SOL",
+    "name": "Solana",
+    "quantity": 25.00,
+    "value": 4125.00,
+    "buyPrice": 148.00,
+    "currentPrice": 165.00,
+    "unrealizedPnL": 425.00,
+    "unrealizedPnLPercent": 11.49,
+    "savings": 0.00
+  },
+  {
+    "ticker": "ADA",
+    "name": "Cardano",
+    "quantity": 1500.00,
+    "value": 570.00,
+    "buyPrice": 0.48,
+    "currentPrice": 0.38,
+    "unrealizedPnL": -150.00,
+    "unrealizedPnLPercent": -20.83,
+    "savings": 45.00
+  },
+  {
+    "ticker": "DOT",
+    "name": "Polkadot",
+    "quantity": 120.00,
+    "value": 696.00,
+    "buyPrice": 6.20,
+    "currentPrice": 5.80,
+    "unrealizedPnL": -48.00,
+    "unrealizedPnLPercent": -6.45,
+    "savings": 14.40
+  },
+  {
+    "ticker": "MATIC",
+    "name": "Polygon",
+    "quantity": 800.00,
+    "value": 488.00,
+    "buyPrice": 0.72,
+    "currentPrice": 0.61,
+    "unrealizedPnL": -88.00,
+    "unrealizedPnLPercent": -15.28,
+    "savings": 26.40
+  }
+]

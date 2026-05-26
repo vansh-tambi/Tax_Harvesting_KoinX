@@ -2,18 +2,6 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Info, ChevronDown } from 'lucide-react';
 
-/**
- * NotesAccordion – a collapsible panel for important notes & disclaimers.
- *
- * Requirements satisfied:
- * - Collapsed height: 42px
- * - Animated expand/collapse (Framer Motion + AnimatePresence)
- * - Header contains an info icon, title, and chevron
- * - Body is a bullet list (placeholder items)
- * - Desktop hover tooltip (native title attribute) – shows "Expand notes"
- * - Mobile tap support (click toggles)
- * - Theme‑aware using CSS variables defined in theme.css
- */
 export default function NotesAccordion() {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -21,31 +9,38 @@ export default function NotesAccordion() {
 
   return (
     <motion.div
-      // Collapsed height when closed, auto height when open
-      animate={{ height: isOpen ? 'auto' : 42 }}
-      className="border-border border rounded-lg overflow-hidden"
+      animate={{ height: isOpen ? 'auto' : '42px' }}
+      transition={{ duration: 0.25, ease: 'easeInOut' }}
       style={{
-        backgroundColor: 'var(--color-surface)',
-        borderBottom: '1px solid var(--color-border)',
+        width: '100%',
+        border: '1px solid var(--color-blue)',
+        backgroundColor: 'transparent',
+        borderRadius: '6px',
+        overflow: 'hidden',
       }}
     >
-      {/* Header – clickable, tooltip on desktop */}
+      {/* Header Button: matches 42px height when collapsed */}
       <button
         onClick={toggle}
-        title="Expand notes" // native tooltip for desktop hover
-        className="flex w-full items-center justify-between px-4 py-2"
+        className="flex w-full items-center justify-between focus:outline-none"
         style={{
+          height: '40px', // 42px minus borders
+          padding: '0 16px',
+          background: 'none',
+          border: 'none',
+          cursor: 'pointer',
           color: 'var(--color-text-primary)',
           fontFamily: 'var(--font-sans)',
-          fontSize: 16,
+          fontSize: '14px',
+          fontWeight: 600,
         }}
       >
         <div className="flex items-center space-x-2">
-          <Info size={20} style={{ color: 'var(--color-blue)' }} />
-          <span>Important Notes & Disclaimers</span>
+          <Info size={16} style={{ color: 'var(--color-blue)' }} />
+          <span style={{ color: 'var(--color-text-primary)' }}>Important Notes & Disclaimers</span>
         </div>
         <ChevronDown
-          size={20}
+          size={16}
           style={{
             color: 'var(--color-text-secondary)',
             transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
@@ -54,7 +49,7 @@ export default function NotesAccordion() {
         />
       </button>
 
-      {/* Body – animated presence */}
+      {/* Expanded Content */}
       <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
@@ -62,10 +57,13 @@ export default function NotesAccordion() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="px-4 pb-3"
             style={{
+              padding: '12px 16px',
+              borderTop: '1px solid rgba(22, 119, 255, 0.2)',
               color: 'var(--color-text-secondary)',
               fontFamily: 'var(--font-sans)',
+              fontSize: '13px',
+              lineHeight: '1.6',
             }}
           >
             <ul className="list-disc pl-5 space-y-1">

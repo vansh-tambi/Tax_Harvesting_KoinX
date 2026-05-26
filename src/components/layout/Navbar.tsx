@@ -1,40 +1,42 @@
 import { motion } from 'framer-motion';
 import { Menu } from 'lucide-react';
 
-// Navbar component – shows the KoinX logo and, on mobile, a hamburger icon.
 export default function Navbar() {
   return (
     <motion.nav
-      initial={{ opacity: 0, y: -12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, ease: 'easeOut' }}
-      className="bg-surface border-border"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3 }}
+      className="bg-surface"
       style={{
+        height: '72px',
         borderBottom: '1px solid var(--color-border)',
         backgroundColor: 'var(--color-surface)',
       }}
     >
       <div
-        className="mx-auto flex items-center justify-between"
-        style={{ maxWidth: 1200, padding: '14px 24px' }}
+        className="mx-auto flex items-center justify-between h-full px-4 sm:px-6"
+        style={{ maxWidth: '1220px' }}
       >
         {/* Logo */}
         <span
-          className="text-primary"
           style={{
             fontWeight: 700,
-            fontSize: 20,
+            fontSize: '20px',
             color: 'var(--color-text-primary)',
+            fontFamily: 'var(--font-sans)',
           }}
         >
           KoinX
         </span>
-        {/* Hamburger – visible only on mobile */}
-        <Menu
-          size={24}
-          className="sm:hidden text-secondary"
-          style={{ color: 'var(--color-text-secondary)' }}
-        />
+        {/* Menu icon right (mobile only) */}
+        <button
+          className="sm:hidden focus:outline-none"
+          aria-label="Toggle menu"
+          style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
+        >
+          <Menu size={24} style={{ color: 'var(--color-text-secondary)' }} />
+        </button>
       </div>
     </motion.nav>
   );
