@@ -8,6 +8,7 @@ All notable changes made to the Tax Loss Harvesting application during this refa
 - Created `src/utils/formatCurrency.ts` for clean currency formatting (INR format).
 - Added dynamic selections to the holdings table, connecting checkboxes to state so users can toggle holdings.
 - Added a dynamic savings banner (`🎉 You're going to save upto ₹X`) displayed only when active savings are available.
+- Added light and dark mode KoinX SVG logos inside `Navbar.tsx` matching exact dimensions and coordinates.
 
 ### Changed
 - Refactored `tsconfig.app.json` to include `"ignoreDeprecations": "6.0"` to silence TS5101 baseUrl deprecations in TypeScript 6.x.
