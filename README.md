@@ -6,9 +6,7 @@ A frontend dashboard that lets users visualize their capital gains, select crypt
 
 ## Demo
 
-**Live:** [deployment-link]
-
-**Repository:** [github-link]
+**Live:** https://tax-harvesting-koin-x.vercel.app/
 
 ---
 
