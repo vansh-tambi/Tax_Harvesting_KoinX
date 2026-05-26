@@ -1,0 +1,43 @@
+@theme {
+  /* Fonts */
+  --font-sans: 'Outfit', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+
+  /* Harmonious, premium HSL tailored colors */
+  --color-brand-50: hsl(250 100% 98%);
+  --color-brand-100: hsl(250 100% 96%);
+  --color-brand-200: hsl(250 100% 92%);
+  --color-brand-300: hsl(250 100% 86%);
+  --color-brand-400: hsl(250 90% 70%);
+  --color-brand-500: hsl(250 84% 54%);
+  --color-brand-600: hsl(250 78% 46%);
+  --color-brand-700: hsl(250 72% 38%);
+  --color-brand-800: hsl(250 65% 26%);
+  --color-brand-900: hsl(250 60% 16%);
+  --color-brand-950: hsl(250 60% 8%);
+
+  /* Gains/Profits color palette (Green/Emerald-inspired) */
+  --color-gain-50: hsl(145 80% 97%);
+  --color-gain-100: hsl(145 80% 92%);
+  --color-gain-500: hsl(142 76% 40%);
+  --color-gain-600: hsl(142 72% 32%);
+
+  /* Losses/Harvesting color palette (Rose/Crimson-inspired) */
+  --color-loss-50: hsl(355 100% 98%);
+  --color-loss-100: hsl(355 100% 95%);
+  --color-loss-500: hsl(350 89% 60%);
+  --color-loss-600: hsl(350 80% 50%);
+
+  /* Custom shadows and borders for premium feel */
+  --shadow-glass-light: 0 8px 32px 0 rgba(31, 38, 135, 0.04);
+  --shadow-glass-dark: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --border-radius-glass: 16px;
+
+  /* Custom animations and transitions */
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
