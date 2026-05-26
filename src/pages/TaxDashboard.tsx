@@ -100,17 +100,13 @@ export default function TaxDashboard() {
             </h2>
           </div>
 
-          {loading ? (
-            <div className="text-center py-8 text-secondary text-sm">
-              Loading holdings...
-            </div>
-          ) : error ? (
-            <div className="text-center py-8 text-sm font-semibold" style={{ color: 'var(--color-loss)' }}>
-              {error}
-            </div>
-          ) : (
-            <HoldingsTable holdings={holdings} />
-          )}
+            {loading ? (
+              <HoldingsTable holdings={[]} loading={true} />
+            ) : error ? (
+              <div className="text-center py-8 text-sm font-semibold" style={{ color: 'var(--color-loss)' }}>{error}</div>
+            ) : (
+              <HoldingsTable holdings={holdings} />
+            )}
         </section>
       </motion.main>
     </div>

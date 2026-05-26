@@ -1,7 +1,12 @@
 import { motion } from 'framer-motion';
-import { Menu } from 'lucide-react';
+import { Menu, Sun, Moon } from 'lucide-react';
 
 export default function Navbar() {
+  const toggleTheme = () => {
+    const root = document.documentElement;
+    root.classList.toggle('dark');
+  };
+
   return (
     <motion.nav
       initial={{ opacity: 0 }}
@@ -29,7 +34,17 @@ export default function Navbar() {
         >
           KoinX
         </span>
-        {/* Menu icon right (mobile only) */}
+        {/* Theme toggle */}
+        <button
+          onClick={toggleTheme}
+          aria-label="Toggle theme"
+          className="focus:outline-none mr-2"
+          style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+        >
+          <Sun size={20} className="block dark:hidden" color="var(--color-text-secondary)" />
+          <Moon size={20} className="hidden dark:block" color="var(--color-text-secondary)" />
+        </button>
+        {/* Menu icon (mobile) */}
         <button
           className="sm:hidden focus:outline-none"
           aria-label="Toggle menu"
