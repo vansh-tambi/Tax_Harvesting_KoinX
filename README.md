@@ -1,56 +1,164 @@
-# Tax Loss Harvesting Dashboard
+# Tax Loss Harvesting
 
-A simple, interactive dashboard built for KoinX to demonstrate Tax Loss Harvesting. It helps users identify which of their holdings have unrealized losses, select them to simulate a harvest, and calculate their potential tax savings.
+A frontend dashboard that lets users visualize their capital gains, select crypto holdings to harvest, and instantly see how their tax liability changes. Built as a KoinX assignment.
 
-## Project Overview
+---
 
-Tax loss harvesting is the practice of selling assets at a loss to offset capital gains tax liabilities. This application:
-1. Displays the user's capital gains ( profits, losses, net gains) in pre-harvest and post-harvest states.
-2. Displays a table of the user's holdings (showing purchase avg, current price, unrealized PnL, etc.).
-3. Allows the user to select specific holdings to harvest, updating the post-harvest card and displaying an estimated savings banner in real-time.
-4. Includes a toggle to switch between light and dark themes.
+## Demo
+
+**Live:** [deployment-link]
+
+**Repository:** [github-link]
+
+---
+
+## Preview
+
+### Desktop
+
+*(add screenshot)*
+
+### Mobile
+
+*(add screenshot)*
+
+---
+
+## Features
+
+- View pre-harvesting and after-harvesting capital gains side by side
+- Select individual holdings or select all — after-harvest numbers update instantly
+- Savings banner shows up only when harvesting actually reduces your gains
+- Responsive layout — desktop shows all columns, mobile collapses to the essentials
+- Dark mode and light mode with proper KoinX logo variants for each
+- Important Notes accordion with smooth expand/collapse animation
+- Mock API calls with a 500ms delay and loading skeleton states
+- Currency formatted in INR with commas (Indian numbering system)
+
+---
 
 ## Tech Stack
 
-- **Core**: React 19 (Functional Components), TypeScript
-- **Build Tool**: Vite
-- **Styling**: Tailwind CSS v4, Vanilla CSS variables for theme management
-- **Animations**: Framer Motion (subtle page fade-ins and card updates)
-- **Icons**: Lucide React
+| Tool | Why |
+|------|-----|
+| React | Component-based UI, hooks for state management |
+| TypeScript | Type safety across props, API responses, and calculations |
+| Tailwind CSS v4 | Utility classes + CSS variables for theming |
+| Framer Motion | Page transitions and accordion animations |
+| Vite | Fast dev server and builds |
+
+---
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── cards/
+│   │   └── SummaryCard.tsx        # reused for both pre and after harvest
+│   ├── holdings/
+│   │   ├── HoldingRow.tsx         # single table row with checkbox
+│   │   └── HoldingsTable.tsx      # table + header + skeletons + view all
+│   └── layout/
+│       ├── Header.tsx
+│       ├── Navbar.tsx             # logo + theme toggle
+│       └── NotesAccordion.tsx
+├── data/
+│   ├── holdings.json
+│   └── capitalGains.json
+├── hooks/
+│   └── useHarvesting.ts           # fetches data, manages selection, calculates gains
+├── pages/
+│   └── TaxDashboard.tsx           # main page, wires everything together
+├── services/
+│   └── mockApi.ts                 # fake API with delay
+├── styles/
+│   ├── globals.css
+│   └── theme.css                  # CSS variables for light/dark
+├── types/
+│   └── index.ts                   # Holding, CapitalGain, STCG, LTCG
+└── utils/
+    └── formatCurrency.ts          # INR formatting helper
+```
+
+---
 
 ## Setup
 
-1. **Install Dependencies**:
-   ```bash
-   npm install
-   ```
-2. **Run Dev Server**:
-   ```bash
-   npm run dev
-   ```
-3. **Build for Production**:
-   ```bash
-   npm run build
-   ```
-4. **Lint and Format**:
-   ```bash
-   npm run lint
-   ```
+```bash
+# install dependencies
+npm install
 
-## Assumptions & Calculations
+# start dev server
+npm run dev
 
-1. **Tax Savings Rate**: The tax savings are calculated at a flat 30% rate on the realized losses, which is standard for cryptocurrency gains in India.
-2. **Short-Term vs. Long-Term**: Tickers `BTC`, `ETH`, `SOL`, and `MATIC` are treated as Short-Term (STCG) assets, while other tickers (e.g., `ADA`, `DOT`) are treated as Long-Term (LTCG) assets.
-3. **Initially Selected State**: On initial load, holdings with harvestable savings (`savings > 0`) are pre-selected in the table to display the potential harvest scenario.
+# production build
+npm run build
 
-## Tradeoffs & Imperfections
+# lint
+npm run lint
+```
 
-- **Mock Data**: Since this is a frontend-only project, data is fetched with a simulated 500ms delay from static local JSON files instead of a real database.
-- **Precision Normalization**: Calculations are rounded to 2 decimal places in the service layer to avoid JavaScript floating-point representation bugs.
-- **Component Size**: Components like `HoldingRow` and `HoldingsTable` have been kept relatively simple and merged to prevent over-abstraction (no separate cells or header files).
+Dev server runs on `http://localhost:5173` by default.
 
-## Future Improvements
+---
 
-- **Real API Integration**: Connect to actual backend endpoints.
-- **Custom Sell Quantities**: Allow users to enter a custom quantity to sell instead of harvesting the entire holding.
-- **Wash Sale Rules**: Detect and warn users about wash sales if they repurchase the same asset within 30 days.
+## Logic Used
+
+### Pre Harvesting
+
+The pre-harvest card pulls data directly from the capital gains API. It shows short-term and long-term profits, losses, net gains, and the total realised capital gains.
+
+```
+net capital gains = profits - losses
+realised = net STCG + net LTCG
+```
+
+### After Harvesting
+
+When you select holdings in the table, their unrealised P&L gets added to the base capital gains:
+
+- If a holding has a **loss**, it increases the losses bucket (short-term or long-term depending on the ticker)
+- If a holding has a **profit**, it increases the profits bucket
+
+The after-harvest card recalculates everything based on these updated numbers.
+
+### Savings
+
+Savings are shown only when the total realised gains actually decrease after harvesting. The banner at the top (`🎉 You're going to save upto ₹X`) appears conditionally.
+
+### Short-term vs Long-term
+
+I'm classifying based on ticker — `BTC`, `ETH`, `SOL`, `MATIC` are treated as short-term, the rest as long-term. In a real app this would come from the backend based on actual holding dates.
+
+---
+
+## Assumptions
+
+- Amount to sell is always the full holding quantity (no partial sell input yet)
+- Short-term / long-term is determined by ticker name, not actual holding period
+- The savings value in `holdings.json` is pre-calculated at 30% of the loss amount
+- Mobile view hides Current Value, Short-Term, Long-Term, and Amount Sell columns
+- All data is mocked locally with static JSON files and a simulated 500ms network delay
+- Holdings with `savings > 0` are pre-selected on initial load to show the harvest scenario
+- The table shows a max of 6 rows with a "View All Holdings" button (not yet functional)
+
+---
+
+## Things I would improve with more time
+
+- Add unit tests for the calculation logic in `useHarvesting`
+- Let users input a custom quantity to sell instead of all-or-nothing
+- Make the "View All Holdings" button actually expand the table
+- Add sorting and filtering on the holdings table
+- Persist theme preference in localStorage
+- Connect to a real backend instead of static JSON
+- Add proper error boundaries
+- Add keyboard navigation for the table checkboxes
+- Better mobile UX — maybe a card-based layout instead of a table on small screens
+
+---
+
+## Notes
+
+Built by closely following the assignment requirements and reference screenshots. Focused on keeping the interactions responsive and the code straightforward — components are kept small, state lives in one hook, and the dashboard just wires things together.
