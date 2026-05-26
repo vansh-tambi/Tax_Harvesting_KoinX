@@ -1,4 +1,4 @@
-import TaxDashboard from './pages/TaxDashboard';
+import TaxDashboard from "./pages/TaxDashboard";
 
 function App() {
   return <TaxDashboard />;
