@@ -12,10 +12,6 @@ A frontend dashboard that lets users visualize their capital gains, select crypt
 
 ## Preview
 
-### Hero
-
-![Hero preview](src/assets/hero.png)
-
 ### Desktop
 
 ![Desktop - Light mode](src/assets/lightlaptop.png)
